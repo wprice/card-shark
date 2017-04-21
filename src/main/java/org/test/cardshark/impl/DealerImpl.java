@@ -1,7 +1,12 @@
 package org.test.cardshark.impl;
 
+import org.test.cardshark.Card;
 import org.test.cardshark.Dealer;
 import org.test.cardshark.Deck;
+import org.test.cardshark.Suit;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wprice on 4/21/17.
@@ -23,6 +28,18 @@ public class DealerImpl implements Dealer {
         return null;
     }
 
+    public List<Card> orderedDeck() {
+
+        List<Card> cards = new ArrayList<Card>();
+
+        for(Suit suit: Suit.values()) {
+            for(int i = 1; i < 13; i++) {
+                cards.add(new Card(suit, i));
+            }
+        }
+
+        return cards;
+    }
 
 
 }
