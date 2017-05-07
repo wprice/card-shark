@@ -9,10 +9,10 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class CardTest {
 
 
-    @Test
-    public void testCard() {
-        PodamFactoryImpl factory = new PodamFactoryImpl();
-        Card random = factory.manufacturePojoWithFullData(Card.class);
-        CardSharkTestHelper.typeComplies(random);
-    }
+  @Test
+  public void testCard() {
+    PodamFactoryImpl factory = new PodamFactoryImpl();
+    Card random = factory.manufacturePojoWithFullData(Card.class);
+    CardSharkTestHelper.typeComplies(random);
+  }
 }

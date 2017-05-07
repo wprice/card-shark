@@ -1,6 +1,5 @@
 package org.test.cardshark;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Assert;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -9,31 +8,31 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 public class CardSharkTestHelper {
 
-    public static <T> void typeComplies(Class<T> c) {
+  public static <T> void typeComplies(Class<T> c) {
 
-        try {
-            typeComplies(c.newInstance());
+    try {
+      typeComplies(c.newInstance());
 
-        }catch(Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage());
     }
+  }
 
-    public static <T> void typeComplies(T t) {
-        Assert.assertNotNull(t);
-        Assert.assertEquals(t, t);
-        Assert.assertNotNull(t.toString());
-        Assert.assertNotEquals(t, null);
-        Assert.assertNotEquals(t, createAndPopulate(t.getClass()));
-        Assert.assertNotEquals(t.hashCode(), createAndPopulate(t.getClass()).hashCode());
-    }
+  public static <T> void typeComplies(T t) {
+    Assert.assertNotNull(t);
+    Assert.assertEquals(t, t);
+    Assert.assertNotNull(t.toString());
+    Assert.assertNotEquals(t, null);
+    Assert.assertNotEquals(t, createAndPopulate(t.getClass()));
+    Assert.assertNotEquals(t.hashCode(), createAndPopulate(t.getClass()).hashCode());
+  }
 
-    private static <T> T createAndPopulate(Class<T> c) {
-        return random(c);
-    }
+  private static <T> T createAndPopulate(Class<T> c) {
+    return random(c);
+  }
 
-    public static <T> T random(Class<T> t) {
-        PodamFactoryImpl factory = new PodamFactoryImpl();
-        return factory.manufacturePojoWithFullData(t);
-    }
+  public static <T> T random(Class<T> t) {
+    PodamFactoryImpl factory = new PodamFactoryImpl();
+    return factory.manufacturePojoWithFullData(t);
+  }
 }
