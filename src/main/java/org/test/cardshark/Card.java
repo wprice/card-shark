@@ -1,5 +1,7 @@
 package org.test.cardshark;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,46 +11,59 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class Card {
 
-    private Suit suit;
-    private Integer value;
+  private static final List<Integer> faceCards = new ArrayList<>();
 
-    public Card(Suit suit, Integer value) {
-        this.suit = suit;
-        this.value = value;
-    }
+  static {
+    faceCards.add(1);
+    faceCards.add(11);
+    faceCards.add(12);
+    faceCards.add(13);
+  }
+  private Suit suit;
+  private int value;
+  private boolean faceCard;
 
-    public Suit getSuit() {
-        return suit;
-    }
+  public Card(Suit suit, Integer value) {
+    this.suit = suit;
+    this.value = value;
+    this.faceCard = faceCards.contains(value);
+  }
 
-    public Integer getValue() {
-        return value;
-    }
+  public static org.test.cardshark.Card cardWithValues(final Suit suit, final Integer value) {
+    return new Card(suit, value);
+  }
 
-    public void setSuit(Suit suit) {
-        this.suit = suit;
-    }
+  public Suit getSuit() {
+    return suit;
+  }
 
-    public void setValue(Integer value) {
-        this.value = value;
-    }
+  public void setSuit(Suit suit) {
+    this.suit = suit;
+  }
 
-    public static org.test.cardshark.Card cardWithValues(final Suit suit, final Integer value) {
-        return new Card(suit, value);
-    }
+  public int getValue() {
+    return value;
+  }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+  public void setValue(int value) {
+    this.value = value;
+  }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
+
+  @Override
+  public int hashCode() {
+    return HashCodeBuilder.reflectionHashCode(this);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return EqualsBuilder.reflectionEquals(this, obj);
+  }
+
+
 }

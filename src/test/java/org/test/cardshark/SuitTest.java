@@ -8,9 +8,9 @@ import org.junit.Test;
 public class SuitTest {
 
 
-    @Test
-    public void testSuit() {
-        Suit suit = CardSharkTestHelper.random(Suit.class);
-        CardSharkTestHelper.typeComplies(suit);
-    }
+  @Test
+  public void testSuit() {
+    Suit suit = CardSharkTestHelper.random(Suit.class);
+    CardSharkTestHelper.typeComplies(suit);
+  }
 }
