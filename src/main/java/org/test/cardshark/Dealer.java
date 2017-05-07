@@ -7,13 +7,10 @@ import java.util.List;
  */
 public interface Dealer {
 
-  Deck shuffle(Deck deck);
-
-  Deck shuffle();
-
-  Deck shuffle(int decks);
-
   Card deal();
-
   List<Card> deal(int cardCount);
+  int cardCount();
+  void returnCards(Card...cards);
+  void returnCards(List<Card> cards);
+  int DECK_SIZE = 52;
 }

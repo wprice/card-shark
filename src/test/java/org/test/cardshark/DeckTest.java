@@ -41,13 +41,14 @@ public class DeckTest {
     assertThat(deck, not(new Deck()));
     assertThat(deck.size(), is(52));
 
+    assertThat(new Deck(true), not(new Deck()));
   }
 
   @Test
   public void testDeal() {
     Deck deck = new Deck(true);
     assertThat(deck, notNullValue());
-    assertThat(deck.dealCards(3).size(), is(3));
+    assertThat(deck.getCards(3).size(), is(3));
     assertThat(deck.size(), is(52 - 3));
 
   }
