@@ -1,10 +1,7 @@
 package org.test.cardshark;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -32,11 +29,11 @@ public class Deck {
    this(false);
   }
 
-  public List<Card> dealCards(int count) {
+  public List<Card> getCards(int count) {
     return IntStream.range(0, count).mapToObj(value -> deck.pop()).collect(Collectors.toList());
   }
-  public Card dealCard() {
-    return dealCards(1).get(0);
+  public Card getCard() {
+    return getCards(1).get(0);
   }
 
   public Deck fromList(List<Card> cards) {

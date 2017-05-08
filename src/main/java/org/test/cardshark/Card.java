@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Created by wprice on 4/21/17.
@@ -19,6 +20,7 @@ public class Card {
     faceCards.add(12);
     faceCards.add(13);
   }
+
   private Suit suit;
   private int value;
   private boolean faceCard;
@@ -37,22 +39,19 @@ public class Card {
     return suit;
   }
 
-  public void setSuit(Suit suit) {
-    this.suit = suit;
-  }
-
   public int getValue() {
     return value;
   }
 
-  public void setValue(int value) {
-    this.value = value;
+  public boolean isFaceCard() {
+    return faceCard;
   }
-
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this);
+
+    String strValue = (isFaceCard()) ? FaceCardType.valueOf(getValue()).toString() : String.valueOf(getValue());
+    return "[" + strValue + " of " + getSuit() + "S]";
   }
 
   @Override

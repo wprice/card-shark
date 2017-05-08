@@ -1,7 +1,12 @@
 package org.test.cardshark.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.test.cardshark.Card;
 import org.test.cardshark.Dealer;
 import org.test.cardshark.Deck;
@@ -12,41 +17,53 @@ import org.test.cardshark.Suit;
  */
 public class DealerImpl implements Dealer {
 
+  private Stack<Card> decks = new Stack<>();
+
   private static final int DEFAULT_DECKS = 1;
-  private static final int DEFAULT_DECK_SIZE = 52;
 
-  public Deck shuffle(Deck deck) {
-    return null;
+  public DealerImpl() {
+    this(DEFAULT_DECKS, false);
   }
 
-  public Deck shuffle() {
-    return shuffle(DEFAULT_DECKS);
+  public DealerImpl(int deckCount, boolean shuffle) {
+
+    IntStream.range(0, deckCount).forEach(value -> {
+      Arrays.stream(Suit.values()).forEach(suit -> {
+        IntStream.range(1, 14).forEach(operand -> decks.push(new Card(suit, operand)));
+      });
+    });
+
+    shuffle();
   }
 
-  public Deck shuffle(int decks) {
-    return null;
-  }
-
-  public List<Card> orderedDeck() {
-
-    List<Card> cards = new ArrayList<Card>();
-
-    for (Suit suit : Suit.values()) {
-      for (int i = 1; i < 13; i++) {
-        cards.add(new Card(suit, i));
-      }
-    }
-
-    return cards;
-  }
 
   @Override
   public Card deal() {
-    return null;
+    return decks.pop();
   }
 
   @Override
-  public List<Card> deal(int cardCount) {
-    return null;
+  public List<Card> deal(int count) {
+    return IntStream.range(0, count).mapToObj(value -> decks.pop()).collect(Collectors.toList());
+  }
+
+  @Override
+  public int cardCount() {
+    return decks.size();
+  }
+
+  private void shuffle() {
+    Collections.shuffle(decks);
+  }
+
+  @Override
+  public void returnCards(Card... cards) {
+    Arrays.stream(cards).filter(card -> !decks.contains(card)).map(card -> decks.add(card));
+    shuffle();
+  }
+
+  @Override
+  public void returnCards(List<Card> cards) {
+    returnCards(cards.toArray(new Card[cards.size()]));
   }
 }
