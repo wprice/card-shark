@@ -1,5 +1,8 @@
 package org.test.cardshark;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Created by wprice on 4/21/17.
  */
@@ -10,21 +13,18 @@ public enum Suit {
   CLUB(2),
   SPADE(3);
 
-  private final int ordinal;
+  private final int value;
 
-  private Suit(int ordinal) {
-    this.ordinal = ordinal;
+  private Suit(int value) {
+    this.value = value;
   }
 
-  public static Suit valueOf(int ordinal) {
-
-    for (Suit suit : Suit.values()) {
-      if (suit.ordinal == ordinal) {
-        return suit;
-      }
-    }
-
-    throw new IllegalArgumentException("Unknown suit for value: " + ordinal);
+  public static Suit valueOf(int value) {
+    return Arrays.stream(Suit.values()).filter(suit -> suit.value == value).collect(
+        Collectors.toList()).get(0);
   }
 
+  public int getValue() {
+    return value;
+  }
 }

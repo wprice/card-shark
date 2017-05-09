@@ -15,7 +15,7 @@ public class Card {
   private static final List<Integer> faceCards = new ArrayList<>();
 
   static {
-    faceCards.add(1);
+    faceCards.add(14);
     faceCards.add(11);
     faceCards.add(12);
     faceCards.add(13);

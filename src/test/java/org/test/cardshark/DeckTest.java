@@ -17,7 +17,7 @@ public class DeckTest {
   public void testDeck() {
     Deck deck = new Deck();
     assertThat(deck, notNullValue());
-    assertThat(deck.size(), is(52));
+    assertThat(deck.size(), is(Dealer.DECK_SIZE));
     assertThat(deck, equalTo(new Deck()));
 
     deck.shuffle();
