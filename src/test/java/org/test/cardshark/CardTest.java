@@ -87,4 +87,41 @@ public class CardTest {
     assertThat(CardSharkHelper.allSuit(Suit.HEART, cards), not(true));
   }
 
+  @Test
+  public void testRoyalFlush(){
+    List<Card> cards= CardSharkTestHelper.royalFlush(Suit.SPADE);
+    assertThat(CardSharkHelper.royalFlush(cards), is(true));
+  }
+
+  @Test
+  public void testStraight() {
+    List<Card> cards = CardSharkTestHelper.cardsOfSuitAndSequence(Suit.SPADE, 2, 7);
+    assertThat(CardSharkHelper.straight(cards), is(true));
+    cards = new ArrayList<>();
+    cards.add(new Card(Suit.SPADE, 4));
+    cards.add(new Card(Suit.SPADE, 8));
+    assertThat(CardSharkHelper.straight(cards), is(false));
+
+  }
+  @Test
+  public void testFlush() {
+    List<Card> cards = CardSharkTestHelper.flushOfSuit(Suit.SPADE, 4);
+    CardSharkHelper.dumpCards(cards);
+    assertThat(CardSharkHelper.flush(cards), is(true));
+    cards.add(new Card(Suit.HEART, CardSharkTestHelper.randomCardValue()));
+    assertThat(CardSharkHelper.flush(cards), is(false));
+  }
+
+  @Test
+  public void testStraightFlush(){
+    List<Card> cards = CardSharkTestHelper.cardsOfSuitAndSequence(Suit.SPADE, 2, 7);
+    assertThat(CardSharkHelper.straightFlush(cards), is(true));
+  }
+
+  @Test
+  public void testFourOfAKind() {
+    List<Card> cards = CardSharkTestHelper.fourOfAKind(8);
+    assertThat(CardSharkHelper.fourOfAKind(cards), is(true));
+  }
+
 }
