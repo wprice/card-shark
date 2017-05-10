@@ -1,6 +1,7 @@
 package org.test.cardshark;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,23 +13,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class Card {
 
-  private static final List<Integer> faceCards = new ArrayList<>();
-
-  static {
-    faceCards.add(14);
-    faceCards.add(11);
-    faceCards.add(12);
-    faceCards.add(13);
-  }
 
   private Suit suit;
   private int value;
-  private boolean faceCard;
+
 
   public Card(Suit suit, Integer value) {
     this.suit = suit;
     this.value = value;
-    this.faceCard = faceCards.contains(value);
   }
 
   public static org.test.cardshark.Card cardWithValues(final Suit suit, final Integer value) {
@@ -44,7 +36,7 @@ public class Card {
   }
 
   public boolean isFaceCard() {
-    return faceCard;
+   return FaceCardType.isFaceCard(getValue());
   }
 
   @Override

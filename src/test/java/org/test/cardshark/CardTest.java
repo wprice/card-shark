@@ -6,11 +6,15 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.stream.Collectors;
 import org.junit.Test;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -27,23 +31,20 @@ public class CardTest {
     assertThat(card.getValue(), is(10));
     assertThat(card.isFaceCard(), is(false));
     assertThat(card, equalTo(Card.cardWithValues(card.getSuit(), card.getValue())));
-
+    CardSharkTestHelper.typeComplies(card);
   }
 
   @Test
   public void testRandomCard() {
-
-    PodamFactoryImpl factory = new PodamFactoryImpl();
-    Card random = factory.manufacturePojoWithFullData(Card.class);
-    CardSharkTestHelper.typeComplies(random);
+    CardSharkTestHelper.typeComplies(CardSharkTestHelper.randomCard());
   }
 
   @Test
   public void testFaceCards() {
     Card card = CardSharkTestHelper.randomCard(true);
     assertThat(card.isFaceCard(), is(true));
-    Suit suit = card.getSuit();
-    assertThat(Arrays.asList(Suit.values()).contains(suit), is(true));
+    assertThat(FaceCardType.isFaceCard(card), is(true));
+    CardSharkTestHelper.typeComplies(card);
   }
 
   @Test
@@ -61,12 +62,26 @@ public class CardTest {
   public void testCardSort() {
     List<Card> cards = CardSharkTestHelper.randomCards(5);
     List<Card> sorted = CardSharkHelper.sortCards(cards);
-    assertThat(cards, not(sorted));
-    assertThat(cards.containsAll(sorted), is(true));
+    assertThat(cards, not(CardSharkHelper.sortCards(cards)));
+    assertThat(cards.containsAll(CardSharkHelper.sortCards(cards)), is(true));
     sorted = CardSharkHelper.sortCards(cards, (o1, o2) -> o1.getSuit().getValue() - o2.getSuit().getValue());
     assertThat(sorted, is(CardSharkHelper.sortCardsBySuit(cards)));
 
-    CardSharkHelper.logCards(sorted);
+  }
+
+  @Test
+  public void testFaceCardCount() {
+    List<Card> cards = new ArrayList<>();
+    cards.add(new Card(Suit.SPADE, FaceCardType.ACE.getValue()));
+    assertThat(CardSharkHelper.faceCardCount(cards), is(1L));
+    assertThat(CardSharkHelper.cardCount(cards, FaceCardType.ACE.getValue()), is(1L));
+  }
+
+  @Test
+  public void testCardCount() {
+
+    List<Card> cards = CardSharkTestHelper.randomCards(7);
+    Map<Integer, Long> cardMap = cards.stream().collect(Collectors.groupingBy(o -> o.getValue(), Collectors.counting()));
 
   }
 }

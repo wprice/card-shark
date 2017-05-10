@@ -60,6 +60,9 @@ public class CardSharkTestHelper {
     return Suit.valueOf(new Random().nextInt(Suit.values().length));
   }
 
+  public static Card randomCard() {
+    return randomCard(false);
+  }
   public static Card randomCard(boolean faceCard) {
     return new Card(randomSuit(), randomCardValue(faceCard));
   }
