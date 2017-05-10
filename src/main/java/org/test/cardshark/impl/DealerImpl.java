@@ -1,6 +1,5 @@
 package org.test.cardshark.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.stream.IntStream;
 import org.test.cardshark.Card;
 import org.test.cardshark.CardSharkHelper;
 import org.test.cardshark.Dealer;
-import org.test.cardshark.Deck;
 import org.test.cardshark.Suit;
 
 /**

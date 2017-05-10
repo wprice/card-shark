@@ -7,22 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.Assert;
-import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  * Created by wprice on 4/21/17.
  */
 public class CardSharkTestHelper {
-
-  public static <T> void typeComplies(Class<T> c) {
-
-    try {
-      typeComplies(c.newInstance());
-
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage());
-    }
-  }
 
   public static <T> void typeComplies(T t) {
     Assert.assertNotNull(t);
@@ -38,22 +27,17 @@ public class CardSharkTestHelper {
   }
 
   public static <T> T random(Class<T> t) {
-    PodamFactoryImpl factory = new PodamFactoryImpl();
-    return factory.manufacturePojoWithFullData(t);
-  }
 
-  public static <T> List<T> randomList(Class<T> t, int count) {
-    List<T> l = new ArrayList<>();
-    for(int i = 0; i < count; i++) {
-      l.add(random(t));
+    try {
+      return t.getConstructor(Suit.class, int.class).newInstance(randomSuit(), randomCardValue());
+    }catch (Exception e) {
+      throw new IllegalStateException(e.getCause());
     }
 
-    return l;
   }
 
   public static List<Card> randomCards(int count) {
     return new Deck(true).getCards(count);
-    //return IntStream.range(0, count).mapToObj(value -> randomCard(false)).collect(Collectors.toList());
   }
 
   public static Suit randomSuit() {
@@ -61,15 +45,22 @@ public class CardSharkTestHelper {
   }
 
   public static Card randomCard() {
-    return randomCard(false);
+    return new Card(randomSuit(), randomCardValue());
   }
+
   public static Card randomCard(boolean faceCard) {
-    return new Card(randomSuit(), randomCardValue(faceCard));
+    return (faceCard) ? new Card(randomSuit(), randomCardValue(FaceCardType.JACK.getValue(), FaceCardType.ACE.getValue())) : randomCard();
   }
 
-  private static int randomCardValue(boolean faceCard) {
-    return (faceCard) ? ThreadLocalRandom.current().nextInt(11, 14)
-        : ThreadLocalRandom.current().nextInt(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD);
+  public static int randomCardValue(int min, int max) {
+    return ThreadLocalRandom.current().nextInt(min, max);
+  }
+  private static int randomCardValue() {
+    return randomCardValue(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD);
   }
 
+  public static List<Card> cardsOfSameSuit(int count, final Suit suit) {
+    return IntStream.rangeClosed(0, count).mapToObj(value -> new Card(suit, randomCardValue())).collect(
+        Collectors.toList());
+  }
 }

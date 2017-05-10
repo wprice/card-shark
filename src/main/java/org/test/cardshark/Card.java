@@ -1,12 +1,7 @@
 package org.test.cardshark;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Created by wprice on 4/21/17.
@@ -18,12 +13,17 @@ public class Card {
   private int value;
 
 
-  public Card(Suit suit, Integer value) {
+  public Card(final Suit suit, final int value) {
+
+    if(value < CardSharkHelper.MIN_CARD || value > CardSharkHelper.MAX_CARD) {
+      throw new IllegalStateException("Invalid card value: " + value);
+    }
+
     this.suit = suit;
     this.value = value;
   }
 
-  public static org.test.cardshark.Card cardWithValues(final Suit suit, final Integer value) {
+  public static org.test.cardshark.Card cardWithValues(final Suit suit, final int value) {
     return new Card(suit, value);
   }
 

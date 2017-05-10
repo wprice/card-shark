@@ -1,16 +1,9 @@
 package org.test.cardshark;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,5 +74,12 @@ public class CardSharkHelper {
     return null;
   }
 
+  public static boolean allFaceCards(final List<Card> cards) {
+    return cards.stream().allMatch(Card::isFaceCard);
+  }
+
+  public static boolean allSuit(final Suit suit, final List<Card> cards) {
+    return cards.stream().allMatch(card -> card.getSuit() == suit);
+  }
 
 }
