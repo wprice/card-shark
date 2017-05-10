@@ -1,5 +1,11 @@
 package org.test.cardshark;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.junit.Assert;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -35,4 +41,32 @@ public class CardSharkTestHelper {
     PodamFactoryImpl factory = new PodamFactoryImpl();
     return factory.manufacturePojoWithFullData(t);
   }
+
+  public static <T> List<T> randomList(Class<T> t, int count) {
+    List<T> l = new ArrayList<>();
+    for(int i = 0; i < count; i++) {
+      l.add(random(t));
+    }
+
+    return l;
+  }
+
+  public static List<Card> randomCards(int count) {
+    return new Deck(true).getCards(count);
+    //return IntStream.range(0, count).mapToObj(value -> randomCard(false)).collect(Collectors.toList());
+  }
+
+  public static Suit randomSuit() {
+    return Suit.valueOf(new Random().nextInt(Suit.values().length));
+  }
+
+  public static Card randomCard(boolean faceCard) {
+    return new Card(randomSuit(), randomCardValue(faceCard));
+  }
+
+  private static int randomCardValue(boolean faceCard) {
+    return (faceCard) ? ThreadLocalRandom.current().nextInt(11, 14)
+        : ThreadLocalRandom.current().nextInt(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD);
+  }
+
 }

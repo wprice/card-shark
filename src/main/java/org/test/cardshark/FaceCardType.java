@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
  */
 public enum FaceCardType {
 
-  ACE(1),
   JACK(11),
   QUEEN(12),
-  KING(13);
+  KING(13),
+  ACE(14);
 
   private final int value;
 

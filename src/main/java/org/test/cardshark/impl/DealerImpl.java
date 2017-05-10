@@ -8,6 +8,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.test.cardshark.Card;
+import org.test.cardshark.CardSharkHelper;
 import org.test.cardshark.Dealer;
 import org.test.cardshark.Deck;
 import org.test.cardshark.Suit;
@@ -29,7 +30,7 @@ public class DealerImpl implements Dealer {
 
     IntStream.range(0, deckCount).forEach(value -> {
       Arrays.stream(Suit.values()).forEach(suit -> {
-        IntStream.range(1, 14).forEach(operand -> decks.push(new Card(suit, operand)));
+        IntStream.rangeClosed(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD).forEach(operand -> decks.push(new Card(suit, operand)));
       });
     });
 

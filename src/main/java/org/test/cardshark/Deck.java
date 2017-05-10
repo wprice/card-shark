@@ -18,7 +18,7 @@ public class Deck {
 
   public Deck(boolean shuffle) {
     Arrays.stream(Suit.values()).forEach(suit -> {
-      IntStream.range(1, 14).forEach(operand -> deck.push(new Card(suit, operand)));
+      IntStream.rangeClosed(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD).forEach(operand -> deck.push(new Card(suit, operand)));
     });
 
     if(shuffle) {
