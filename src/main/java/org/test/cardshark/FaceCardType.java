@@ -23,5 +23,13 @@ public enum FaceCardType {
     return Arrays.stream(FaceCardType.values()).filter(faceCardType -> faceCardType.value == value).collect(
         Collectors.toList()).get(0);
   }
-
+  public static boolean isFaceCard(int value) {
+    return Arrays.stream(values()).filter(faceCardType -> faceCardType.value == value).collect(Collectors.toList()).size() > 0;
+  }
+  public static boolean isFaceCard(final Card card) {
+    return isFaceCard(card.getValue());
+  }
+  public int getValue() {
+    return this.value;
+  }
 }
