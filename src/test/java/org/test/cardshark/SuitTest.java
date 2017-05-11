@@ -8,8 +8,12 @@ import org.junit.Test;
 public class SuitTest {
 
   @Test(expected = IndexOutOfBoundsException.class)
-  public void testInvalidSuit() {
-    Suit suit = Suit.valueOf(Suit.values().length + 1);
+  public void testInvalidSuitMax() {
+    Suit.valueOf(Suit.values().length + 1);
   }
 
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testInvalidSuitMin() {
+    Suit.valueOf(-1);
+  }
 }
