@@ -41,6 +41,12 @@ public class CardSharkTestHelper {
     return new Deck(true).getCards(count);
   }
 
+  /**
+   * A random Suit
+   * @return a random Suit
+   *
+   * @see Suit
+   */
   public static Suit randomSuit() {
     return Suit.valueOf(new Random().nextInt(Suit.values().length));
   }

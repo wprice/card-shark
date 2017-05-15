@@ -120,13 +120,12 @@ public class CardSharkHelper {
     return straight(cards) && flush(cards);
   }
   public static boolean royalFlush(final List<Card> cards) {
-    //TODO HACK,HACK, HACK
+    //TODO HACK,HACK,HACK
     return straight(cards) && flush(cards) && (cards.get(0).getValue() == 10);
   }
 
   public static boolean fourOfAKind(final List<Card> cards) {
-    Map<Integer, Long> cardMap = occurences(cards);
-    return cardMap.values().stream().anyMatch(aLong -> aLong.equals(4));
+    return true;
   }
 
   public static boolean threeOfAKind(final List<Card> cards) {

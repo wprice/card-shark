@@ -20,6 +20,7 @@ public class CardTest {
 
   @Test
   public void testCard() {
+
     Card card = new Card(Suit.CLUB, 10);
     assertThat(card.getSuit(), is(Suit.CLUB));
     assertThat(card.getValue(), is(10));
@@ -123,5 +124,4 @@ public class CardTest {
     List<Card> cards = CardSharkTestHelper.fourOfAKind(8);
     assertThat(CardSharkHelper.fourOfAKind(cards), is(true));
   }
-
 }

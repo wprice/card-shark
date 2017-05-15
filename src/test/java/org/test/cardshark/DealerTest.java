@@ -54,7 +54,27 @@ public class DealerTest {
     List<Card> cards = dealer.deal(5);
     assertThat(dealer.cardCount(), is(Dealer.DECK_SIZE - 5));
     dealer.returnCards(cards);
+  }
 
+  @Test
+  public void testDealHand() {
+    Dealer dealer = DealerFactory.createDealer();
+    List<Card> cards = dealer.deal(2);
+
+    System.out.println("Player Hole cards: ");
+    CardSharkHelper.dumpCards(cards);
+
+    List<Card> flop = dealer.deal(3);
+
+    System.out.println("Flop: ");
+    CardSharkHelper.dumpCards(flop);
+
+    System.out.println("Turn: ");
+    System.out.println(dealer.deal());
+
+    System.out.println("River: ");
+    System.out.println(dealer.deal());
+    
   }
 
 }
