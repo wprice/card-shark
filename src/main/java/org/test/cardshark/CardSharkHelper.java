@@ -1,9 +1,13 @@
 package org.test.cardshark;
 
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +74,18 @@ public class CardSharkHelper {
     return cards.stream().filter(predicate).count();
   }
 
-  public static HandRank rankCards(final List<Card> cards) {
+  public static HandRank rank(final List<Card> cards) {
+
+    if(royalFlush(cards)) {
+      return HandRank.ROYAL_FLUSH;
+    } else if(straightFlush(cards)) {
+      return HandRank.STRAIGHT_FLUSH;
+    } else if(straight(cards)) {
+      return HandRank.STRAIGHT;
+    } else if(fourOfAKind(cards)) {
+      return HandRank.FOUR_OF_A_KIND;
+    }
+
     return null;
   }
 
@@ -82,4 +97,43 @@ public class CardSharkHelper {
     return cards.stream().allMatch(card -> card.getSuit() == suit);
   }
 
+  public static boolean straight(final List<Card> cards) {
+
+    for(int i = 0; i < cards.size() -1 ; i++) {
+      if(cards.get(i).getValue() + 1 != cards.get(i + 1).getValue()) {
+        return false;
+      }
+    }
+    return true;
+  }
+  public static boolean flush(final List<Card> cards) {
+
+    for(Suit suit: Suit.values()) {
+      if(allSuit(suit, cards)) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+  public static boolean straightFlush(final List<Card> cards) {
+    return straight(cards) && flush(cards);
+  }
+  public static boolean royalFlush(final List<Card> cards) {
+    //TODO HACK,HACK,HACK
+    return straight(cards) && flush(cards) && (cards.get(0).getValue() == 10);
+  }
+
+  public static boolean fourOfAKind(final List<Card> cards) {
+    return true;
+  }
+
+  public static boolean threeOfAKind(final List<Card> cards) {
+    Map<Integer, Long> cardMap = cards.stream().collect(Collectors.groupingBy(o -> o.getValue(), Collectors.counting()));
+    return cardMap.values().stream().anyMatch(aLong -> aLong.equals(3));
+  }
+
+  private static Map<Integer, Long> occurences(final List<Card> cards) {
+    return cards.stream().collect(Collectors.groupingBy(o -> o.getValue(), Collectors.counting()));
+  }
 }

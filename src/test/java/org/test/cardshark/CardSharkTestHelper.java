@@ -1,6 +1,7 @@
 package org.test.cardshark;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,6 +41,12 @@ public class CardSharkTestHelper {
     return new Deck(true).getCards(count);
   }
 
+  /**
+   * A random Suit
+   * @return a random Suit
+   *
+   * @see Suit
+   */
   public static Suit randomSuit() {
     return Suit.valueOf(new Random().nextInt(Suit.values().length));
   }
@@ -55,8 +62,24 @@ public class CardSharkTestHelper {
   public static int randomCardValue(int min, int max) {
     return ThreadLocalRandom.current().nextInt(min, max);
   }
-  private static int randomCardValue() {
+  public static int randomCardValue() {
     return randomCardValue(CardSharkHelper.MIN_CARD, CardSharkHelper.MAX_CARD);
+  }
+
+  public static List<Card> flushOfSuit(final Suit suit, int count) {
+    return IntStream.rangeClosed(0, count).mapToObj(value -> new Card(suit, randomCardValue())).collect(Collectors.toList());
+  }
+
+  public static List<Card> royalFlush(final Suit suit) {
+    return cardsOfSuitAndSequence(suit, 10, FaceCardType.ACE.getValue());
+  }
+
+  public static List<Card> cardsOfSuitAndSequence(final Suit suit, int min, int max) {
+    return IntStream.rangeClosed(min, max).mapToObj(value -> new Card(suit, value)).collect(Collectors.toList());
+  }
+
+  public static List<Card> fourOfAKind(int value) {
+    return Arrays.stream(Suit.values()).map(suit -> new Card(suit, value)).collect(Collectors.toList());
   }
 
   public static List<Card> cardsOfSameSuit(int count, final Suit suit) {
